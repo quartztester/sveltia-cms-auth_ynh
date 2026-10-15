@@ -13,6 +13,9 @@ chown -R "$app:$app" "$install_dir"
 # copy inside the archive.
 ynh_script_progression "Re-applying $app's configuration from settings..."
 
+site_hosts=$(ynh_app_setting_get --key=site_hosts)
+github_client_id=$(ynh_app_setting_get --key=github_client_id)
+github_client_secret=$(ynh_app_setting_get --key=github_client_secret)
 ynh_nodejs_install
 render_app_configs
 chown -R "$app:$app" "$install_dir"

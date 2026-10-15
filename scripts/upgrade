@@ -6,6 +6,10 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service="$app" --action="stop"
 
+site_hosts=$(ynh_app_setting_get --key=site_hosts)
+github_client_id=$(ynh_app_setting_get --key=github_client_id)
+github_client_secret=$(ynh_app_setting_get --key=github_client_secret)
+
 ynh_script_progression "Upgrading Node.js and source files..."
 
 ynh_nodejs_install

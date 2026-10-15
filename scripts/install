@@ -9,6 +9,15 @@ if [ "$path" != "/" ]; then
     ynh_die "This app must be installed at the root of a domain (the OAuth callback URL is always <domain>/callback)."
 fi
 
+for key in site_hosts github_client_id github_client_secret; do
+    value=$(ynh_app_setting_get --key="$key")
+    [ -n "$value" ] || ynh_die "Missing required setting $key"
+    ynh_app_setting_set --key="$key" --value="$value"
+done
+site_hosts=$(ynh_app_setting_get --key=site_hosts)
+github_client_id=$(ynh_app_setting_get --key=github_client_id)
+github_client_secret=$(ynh_app_setting_get --key=github_client_secret)
+
 #=================================================
 # SETUP NODEJS AND SOURCE FILES
 #=================================================

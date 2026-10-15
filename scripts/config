@@ -4,16 +4,21 @@ source /usr/share/yunohost/helpers
 
 ynh_abort_if_errors
 
+# NOTE: the panel answers arrive as shell variables named after the short
+# keys (github_client_id, github_client_secret, site_hosts) - do NOT
+# re-fetch those from settings, that would clobber the new values.
 install_dir=$(ynh_app_setting_get --key=install_dir)
 port=$(ynh_app_setting_get --key=port)
-site_hosts=$(ynh_app_setting_get --key=site_hosts)
-github_client_id=$(ynh_app_setting_get --key=github_client_id)
-github_client_secret=$(ynh_app_setting_get --key=github_client_secret)
 
 # Settings are stored by the panel; re-render the env file they feed so the
 # service picks up new credentials on restart (core restarts it afterwards).
 ynh_app_config_apply() {
     _ynh_app_config_apply
+    # Fall back to stored settings only when the panel passed no answers
+    # (e.g. a plain "apply" with no changes).
+    site_hosts=${site_hosts:-$(ynh_app_setting_get --key=site_hosts)}
+    github_client_id=${github_client_id:-$(ynh_app_setting_get --key=github_client_id)}
+    github_client_secret=${github_client_secret:-$(ynh_app_setting_get --key=github_client_secret)}
     ynh_config_add --template="env" --destination="$install_dir/env"
     chmod 600 "$install_dir/env"
     chown "$app:$app" "$install_dir/env"

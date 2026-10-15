@@ -7,7 +7,7 @@ name = "Sveltia CMS Auth"
 description.en = "OAuth authenticator letting Sveltia or Decap CMS sign in to GitHub"
 description.fr = "Authentificateur OAuth permettant à Sveltia ou Decap CMS de se connecter à GitHub"
 
-version = "33674be~ynh1"
+version = "0.0.0~ynh1"
 
 maintainers = ["quartztester"]
 
