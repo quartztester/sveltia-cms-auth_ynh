@@ -1,0 +1,53 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+# The OAuth callback URL registered with GitHub is always <domain>/callback,
+# so the app must own the root of its domain.
+if [ "$path" != "/" ]; then
+    ynh_die "This app must be installed at the root of a domain (the OAuth callback URL is always <domain>/callback)."
+fi
+
+#=================================================
+# SETUP NODEJS AND SOURCE FILES
+#=================================================
+ynh_script_progression "Setting up Node.js and source files..."
+
+ynh_nodejs_install
+ynh_setup_source --dest_dir="$install_dir/src"
+install -D -m 0644 "$install_dir/src/src/index.js" "$install_dir/worker.js"
+rm -rf "$install_dir/src"
+
+ynh_script_progression "Adding $app's configuration files..."
+render_app_configs
+chown -R "$app:$app" "$install_dir"
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+mkdir -p "/var/log/$app"
+chown "$app:$app" "/var/log/$app"
+
+node_bin="$nodejs_dir/node"
+ynh_config_add_systemd
+ynh_config_add_nginx
+ynh_config_add_logrotate
+
+yunohost service add "$app" --description="Sveltia CMS OAuth authenticator" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="start"
+wait_for_listen
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Installation of $app completed"

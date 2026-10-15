@@ -1,0 +1,9 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/main/schemas/tests.v1.schema.json
+
+test_format = 1.0
+
+[default]
+    [default.args]
+    site_hosts = "cms.example.org"
+    github_client_id = "Iv1.0123456789abcdef"
+    github_client_secret = "0123456789abcdef0123456789abcdef01234567"

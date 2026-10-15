@@ -1,0 +1,78 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/main/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "sveltia_auth"
+name = "Sveltia CMS Auth"
+description.en = "OAuth authenticator letting Sveltia or Decap CMS sign in to GitHub"
+description.fr = "Authentificateur OAuth permettant à Sveltia ou Decap CMS de se connecter à GitHub"
+
+version = "33674be~ynh1"
+
+maintainers = ["quartztester"]
+
+[upstream]
+license = "MIT"
+code = "https://github.com/sveltia/sveltia-cms-auth"
+admindoc = "https://github.com/sveltia/sveltia-cms-auth#readme"
+
+[integration]
+yunohost = ">= 12.1.17"
+helpers_version = "2.1"
+architectures = "all"
+multi_instance = true
+ldap = "not_relevant"
+sso = "not_relevant"
+disk = "20M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/"
+    help.en = "Must stay \"/\": the OAuth callback URL is always <domain>/callback."
+    help.fr = "Doit rester \"/\" : l'URL de rappel OAuth est toujours <domaine>/callback."
+
+    [install.init_main_permission]
+    type = "group"
+    default = "admins"
+
+    [install.site_hosts]
+    ask.en = "Hostname(s) allowed to authenticate through this endpoint"
+    ask.fr = "Nom(s) d'hôte autorisés à s'authentifier via ce point de terminaison"
+    help.en = "The CMS site's own hostname(s), comma-separated, e.g. cms.example.org. NOT this authenticator's domain."
+    help.fr = "Le(s) nom(s) d'hôte du site CMS lui-même, séparés par des virgules, ex. cms.example.org. PAS le domaine de cet authentificateur."
+    type = "string"
+    example = "cms.example.org"
+
+    [install.github_client_id]
+    ask.en = "GitHub OAuth app client ID"
+    ask.fr = "ID client de l'app OAuth GitHub"
+    type = "string"
+    example = "Iv1.0123456789abcdef"
+
+    [install.github_client_secret]
+    ask.en = "GitHub OAuth app client secret"
+    ask.fr = "Secret client de l'app OAuth GitHub"
+    type = "string"
+
+[resources]
+    [resources.sources.main]
+    url = "https://github.com/sveltia/sveltia-cms-auth/archive/33674be7ec77c1b771983650d979cae88160e093.tar.gz"
+    sha256 = "3faedf665c95d63ba346da458f42920bd4de211e2ad3ecceac3f13c9ce5b2467"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]
+
+    [resources.nodejs]
+    version = "24"

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- brutalist padlock with an amber document-shaped keyhole -->
+  <path d="M152 216 v-64 a104 104 0 0 1 208 0 v64" fill="none" stroke="#111" stroke-width="48"/>
+  <rect x="88" y="216" width="336" height="232" fill="#111"/>
+  <!-- document keyhole: page with folded corner -->
+  <path d="M224 268 h48 l40 40 v76 h-88 z" fill="#ffc400"/>
+  <path d="M272 268 v40 h40" fill="#111"/>
+  <rect x="240" y="330" width="64" height="14" fill="#111"/>
+</svg>

@@ -1,0 +1,25 @@
+#:schema https://github.com/YunoHost/apps/raw/main/schemas/config_panel.v1.schema.json
+
+version = "1.0"
+
+[main]
+name.en = "Sveltia CMS Auth"
+services = ["__APP__"]
+
+    [main.oauth]
+    name.en = "GitHub OAuth"
+
+        [main.oauth.github_client_id]
+        ask.en = "GitHub OAuth app client ID"
+        type = "string"
+        bind = "settings"
+
+        [main.oauth.github_client_secret]
+        ask.en = "GitHub OAuth app client secret"
+        type = "string"
+        bind = "settings"
+
+        [main.oauth.site_hosts]
+        ask.en = "Hostname(s) allowed to authenticate (comma-separated)"
+        type = "string"
+        bind = "settings"
