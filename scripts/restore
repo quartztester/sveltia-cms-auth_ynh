@@ -1,12 +1,23 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
+#=================================================
+# RESTORE THE APP MAIN DIR
+#=================================================
 ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 chown -R "$app:$app" "$install_dir"
+
+#=================================================
+# RE-APPLY APP CONFIGURATION
+#=================================================
 
 # The env file (which carries the OAuth secrets) is re-rendered from the app
 # settings, which are the single source of truth, rather than trusting the
@@ -20,6 +31,9 @@ ynh_nodejs_install
 render_app_configs
 chown -R "$app:$app" "$install_dir"
 
+#=================================================
+# RESTORE SYSTEM CONFIGURATION
+#=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
 
 mkdir -p "/var/log/$app"
@@ -35,11 +49,18 @@ ynh_restore "/etc/logrotate.d/$app"
 
 yunohost service add "$app" --description="Sveltia CMS OAuth authenticator" --log="/var/log/$app/$app.log"
 
+#=================================================
+# RELOAD NGINX AND THE APP SERVICE
+#=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
 ynh_systemctl --service="$app" --action="start"
 wait_for_listen
 
 ynh_systemctl --service=nginx --action=reload
+
+#=================================================
+# END OF SCRIPT
+#=================================================
 
 ynh_script_progression "Restoration completed for $app"

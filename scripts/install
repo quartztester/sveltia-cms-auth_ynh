@@ -1,13 +1,25 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
+
+#=================================================
+# CHECK INSTALL LOCATION
+#=================================================
 
 # The OAuth callback URL registered with GitHub is always <domain>/callback,
 # so the app must own the root of its domain.
 if [ "$path" != "/" ]; then
     ynh_die "This app must be installed at the root of a domain (the OAuth callback URL is always <domain>/callback)."
 fi
+
+#=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
 
 for key in site_hosts github_client_id github_client_secret; do
     value=$(ynh_app_setting_get --key="$key")
@@ -28,6 +40,9 @@ ynh_setup_source --dest_dir="$install_dir/src"
 install -D -m 0644 "$install_dir/src/src/index.js" "$install_dir/worker.js"
 rm -rf "$install_dir/src"
 
+#=================================================
+# APP INITIAL CONFIGURATION
+#=================================================
 ynh_script_progression "Adding $app's configuration files..."
 render_app_configs
 chown -R "$app:$app" "$install_dir"
