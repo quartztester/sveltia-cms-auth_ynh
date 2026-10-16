@@ -58,7 +58,7 @@ ram.runtime = "50M"
     [install.github_client_secret]
     ask.en = "GitHub OAuth app client secret"
     ask.fr = "Secret client de l'app OAuth GitHub"
-    type = "string"
+    type = "password"
 
 [resources]
     [resources.sources.main]

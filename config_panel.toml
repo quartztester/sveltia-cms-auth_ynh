@@ -16,7 +16,7 @@ services = ["__APP__"]
 
         [main.oauth.github_client_secret]
         ask.en = "GitHub OAuth app client secret"
-        type = "string"
+        type = "password"
         bind = "settings"
 
         [main.oauth.site_hosts]
