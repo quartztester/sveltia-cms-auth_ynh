@@ -11,8 +11,6 @@ source /usr/share/yunohost/helpers
 # CHECK INSTALL LOCATION
 #=================================================
 
-# The OAuth callback URL registered with GitHub is always <domain>/callback,
-# so the app must own the root of its domain.
 if [ "$path" != "/" ]; then
     ynh_die "This app must be installed at the root of a domain (the OAuth callback URL is always <domain>/callback)."
 fi

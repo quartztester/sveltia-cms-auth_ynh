@@ -20,9 +20,7 @@ chown -R "$app:$app" "$install_dir"
 # RE-APPLY APP CONFIGURATION
 #=================================================
 
-# The env file (which carries the OAuth secrets) is re-rendered from the app
-# settings, which are the single source of truth, rather than trusting the
-# copy inside the archive.
+# env (OAuth secrets) is re-rendered from settings — the source of truth — not from the archived copy.
 ynh_script_progression "Re-applying $app's configuration from settings..."
 
 site_hosts=$(ynh_app_setting_get --key=site_hosts)

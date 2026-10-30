@@ -13,9 +13,7 @@ ynh_abort_if_errors
 # LOAD CURRENT SETTINGS
 #=================================================
 
-# NOTE: the panel answers arrive as shell variables named after the short
-# keys (github_client_id, github_client_secret, site_hosts) - do NOT
-# re-fetch those from settings, that would clobber the new values.
+# NOTE: panel answers arrive as shell vars named after the short keys — do NOT re-fetch those from settings, that would clobber the new values.
 install_dir=$(ynh_app_setting_get --key=install_dir)
 port=$(ynh_app_setting_get --key=port)
 
@@ -23,8 +21,7 @@ port=$(ynh_app_setting_get --key=port)
 # APPLY NEW SETTINGS
 #=================================================
 
-# Settings are stored by the panel; re-render the env file they feed so the
-# service picks up new credentials on restart (core restarts it afterwards).
+# Re-render the env file the settings feed so the service picks up new credentials on restart (core restarts it afterwards).
 ynh_app_config_apply() {
     _ynh_app_config_apply
     # Fall back to stored settings only when the panel passed no answers
