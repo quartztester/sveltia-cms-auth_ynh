@@ -1,4 +1,8 @@
 The service runs as a systemd unit (`systemctl status sveltia_auth`), listens
+
+This app is headless (a CORS/OAuth callback shim with no UI of its own),
+so it ships no screenshots by design; screenshots of Sveltia CMS itself live in
+the upstream Sveltia project docs.
 on a loopback port (`yunohost app settings sveltia_auth port`) and logs to
 `/var/log/sveltia_auth/sveltia_auth.log`.
 
