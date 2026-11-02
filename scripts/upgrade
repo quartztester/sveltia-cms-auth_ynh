@@ -8,7 +8,10 @@ ynh_systemctl --service="$app" --action="stop"
 
 site_hosts=$(ynh_app_setting_get --key=site_hosts)
 github_client_id=$(ynh_app_setting_get --key=github_client_id)
-github_client_secret=$(ynh_app_setting_get --key=github_client_secret)
+# Secret was never a setting (YunoHost scrubs password asks) — the
+# rendered env file is its persistent home; read it back from there.
+github_client_secret=$(sed -n 's/^GITHUB_CLIENT_SECRET=//p' "$install_dir/env" 2>/dev/null)
+: "${github_client_secret:?Missing GITHUB_CLIENT_SECRET in $install_dir/env}"
 
 ynh_script_progression "Upgrading Node.js and source files..."
 
