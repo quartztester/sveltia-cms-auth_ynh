@@ -14,11 +14,6 @@ services = ["__APP__"]
         type = "string"
         bind = "settings"
 
-        [main.oauth.github_client_secret]
-        ask.en = "GitHub OAuth app client secret"
-        type = "password"
-        bind = "settings"
-
         [main.oauth.site_hosts]
         ask.en = "Hostname(s) allowed to authenticate (comma-separated)"
         type = "string"
