@@ -1,6 +1,4 @@
-// Minimal node:http adapter for the (unmodified) Cloudflare Worker handler
-// in ./worker.js. Reconstructs the absolute request URL from proxy headers so
-// the worker sees the public https origin behind nginx.
+// node:http adapter for the unmodified Worker handler; rebuilds the public https origin from proxy headers
 import http from "node:http";
 import { webcrypto } from "node:crypto";
 
